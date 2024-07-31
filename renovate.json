@@ -5,7 +5,7 @@
   ],
   "packageRules": [
     {
-      "matchManagers": ["gomod,npm,github-actions"],
+      "matchManagers": ["gomod","npm","github-actions"],
       "enabled": false
     }
   ],
