@@ -11,6 +11,7 @@
   ],
   "platformAutomerge": true,
   "platformCommit": true,
+  "includeForks": true,
   "regexManagers": [
     {
       "fileMatch": [
