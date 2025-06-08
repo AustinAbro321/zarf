@@ -11,7 +11,7 @@ runs:
     - name: install grype
       env:
         # renovate: datasource=github-tags depName=anchore/grype versioning=semver
-        VERSION: v0.74.6
+        VERSION: v0.92.2
       run: "curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin $VERSION"
       shell: bash
 
