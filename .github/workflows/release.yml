@@ -45,23 +45,23 @@ jobs:
         run: |
           cp build/zarf build/zarf-linux-amd64
           cp build/zarf-arm build/zarf-linux-arm64
-          docker buildx build --push --platform linux/arm64/v8,linux/amd64 --tag ghcr.io/zarf-dev/zarf/agent:$GITHUB_REF_NAME .
+          docker buildx build --push --platform linux/arm64/v8,linux/amd64 --tag ghcr.io/austinabro321/zarf/agent:$GITHUB_REF_NAME .
           rm build/zarf-linux-amd64
           rm build/zarf-linux-arm64
-          echo ZARF_AGENT_IMAGE_DIGEST=$(docker buildx imagetools inspect ghcr.io/zarf-dev/zarf/agent:$GITHUB_REF_NAME --format '{{ json . }}' | jq -r .manifest.digest) >> $GITHUB_ENV
+          echo ZARF_AGENT_IMAGE_DIGEST=$(docker buildx imagetools inspect ghcr.io/austinabro321/zarf/agent:$GITHUB_REF_NAME --format '{{ json . }}' | jq -r .manifest.digest) >> $GITHUB_ENV
 
-      - name: Auth with AWS
-        uses: aws-actions/configure-aws-credentials@b47578312673ae6fa5b5096b330d9fbac3d116df # v4.2.1
-        with:
-          role-to-assume: ${{ secrets.AWS_KMS_ROLE_ARN }}
-          role-session-name: ${{ github.job || github.event.client_payload.pull_request.head.sha || github.sha }}
-          aws-region: us-east-1
-          role-duration-seconds: 3600
+      # - name: Auth with AWS
+      #   uses: aws-actions/configure-aws-credentials@b47578312673ae6fa5b5096b330d9fbac3d116df # v4.2.1
+      #   with:
+      #     role-to-assume: ${{ secrets.AWS_KMS_ROLE_ARN }}
+      #     role-session-name: ${{ github.job || github.event.client_payload.pull_request.head.sha || github.sha }}
+      #     aws-region: us-east-1
+      #     role-duration-seconds: 3600
 
-      - name: "Zarf Agent: Sign the Image"
-        run: cosign sign --key awskms:///${{ secrets.COSIGN_AWS_KMS_KEY_ARN }} -a release-engineer=https://github.com/${{ github.actor }} -a version=$GITHUB_REF_NAME ghcr.io/zarf-dev/zarf/agent@$ZARF_AGENT_IMAGE_DIGEST -y
-        env:
-          COSIGN_EXPERIMENTAL: 1
+      # - name: "Zarf Agent: Sign the Image"
+      #   run: cosign sign --key awskms:///${{ secrets.COSIGN_AWS_KMS_KEY_ARN }} -a release-engineer=https://github.com/${{ github.actor }} -a version=$GITHUB_REF_NAME ghcr.io/zarf-dev/zarf/agent@$ZARF_AGENT_IMAGE_DIGEST -y
+      #   env:
+      #     COSIGN_EXPERIMENTAL: 1
 
       # Builds init packages since GoReleaser won't handle this for us
       - name: Build init-packages For Release
@@ -71,8 +71,8 @@ jobs:
 
       - name: Publish Init Package as OCI and Skeleton
         run: |
-          make publish-init-package ARCH=amd64 REPOSITORY_URL=ghcr.io/zarf-dev/packages
-          make publish-init-package ARCH=arm64 REPOSITORY_URL=ghcr.io/zarf-dev/packages
+          make publish-init-package ARCH=amd64 REPOSITORY_URL=ghcr.io/austinabro321/packages
+          make publish-init-package ARCH=arm64 REPOSITORY_URL=ghcr.io/austinabro321/packages
 
       # Upload the contents of the build directory for later stages to use
       - name: Upload build artifacts
