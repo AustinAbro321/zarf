@@ -15,7 +15,7 @@ builds:
     goos:
       - linux
       - darwin
-      - windows
+      # - windows
     ldflags:
       - -s -w -X github.com/zarf-dev/zarf/src/config.CLIVersion={{.Env.TAG}}
       - -X k8s.io/component-base/version.gitVersion=v{{.Env.K8S_MODULES_MAJOR_VER}}.{{.Env.K8S_MODULES_MINOR_VER}}.{{.Env.K8S_MODULES_PATCH_VER}}
@@ -64,46 +64,46 @@ changelog:
 # NOTE: We are explicitly adding the init-packages that are built prior to GoReleaser stage in the GitHub Actions workflow
 release:
   github:
-    owner: zarf-dev
+    owner: austinabro321
     name: zarf
   prerelease: auto
   mode: append
   extra_files:
     - glob: ./build/zarf-init-*
 
-# Update the 'generic' brew formula and create a versioned brew formula for artifacts from this release
-brews:
-  - name: "{{ .Env.BREW_NAME }}"
-    repository:
-      owner: defenseunicorns
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-      branch: "{{ .ProjectName }}-{{.Env.TAG}}"
-      pull_request:
-        enabled: true
-        base:
-          branch: main
-          owner: defenseunicorns
-          name: homebrew-tap
+# # Update the 'generic' brew formula and create a versioned brew formula for artifacts from this release
+# brews:
+#   - name: "{{ .Env.BREW_NAME }}"
+#     repository:
+#       owner: defenseunicorns
+#       name: homebrew-tap
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+#       branch: "{{ .ProjectName }}-{{.Env.TAG}}"
+#       pull_request:
+#         enabled: true
+#         base:
+#           branch: main
+#           owner: defenseunicorns
+#           name: homebrew-tap
 
-    commit_msg_template: "build(release): upgrade {{ .ProjectName }} to {{.Env.TAG}}"
-    homepage: "https://zarf.dev/"
-    description: "DevSecOps for Airgap"
+#     commit_msg_template: "build(release): upgrade {{ .ProjectName }} to {{.Env.TAG}}"
+#     homepage: "https://zarf.dev/"
+#     description: "DevSecOps for Airgap"
 
-  # NOTE: We are using .Version instead of .Tag because homebrew has weird semver parsing rules and won't be able to
-  #       install versioned releases that has a `v` character before the version number.
-  - name: "zarf@{{ .Version }}"
-    repository:
-      owner: defenseunicorns
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-      branch: "{{ .ProjectName }}-{{.Env.TAG}}"
-      pull_request:
-        enabled: true
-        base:
-          branch: main
-          owner: defenseunicorns
-          name: homebrew-tap
-    commit_msg_template: "build(release): {{ .ProjectName }}@{{.Env.TAG}}"
-    homepage: "https://zarf.dev/"
-    description: "DevSecOps for Airgap"
+#   # NOTE: We are using .Version instead of .Tag because homebrew has weird semver parsing rules and won't be able to
+#   #       install versioned releases that has a `v` character before the version number.
+#   - name: "zarf@{{ .Version }}"
+#     repository:
+#       owner: defenseunicorns
+#       name: homebrew-tap
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+#       branch: "{{ .ProjectName }}-{{.Env.TAG}}"
+#       pull_request:
+#         enabled: true
+#         base:
+#           branch: main
+#           owner: defenseunicorns
+#           name: homebrew-tap
+#     commit_msg_template: "build(release): {{ .ProjectName }}@{{.Env.TAG}}"
+#     homepage: "https://zarf.dev/"
+#     description: "DevSecOps for Airgap"

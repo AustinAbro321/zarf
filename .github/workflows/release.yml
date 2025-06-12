@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-release:
-    runs-on: large-ubuntu-zarf-release
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       packages: write
