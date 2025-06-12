@@ -131,6 +131,7 @@ release-init-package:
 ## Build the Zarf CLI for all platforms aligned with the release process
 ## skipping validation here to allow for building with a dirty git state (IE development)
 goreleaser-build:
+	TAG="$(CLI_VERSION)" \
 	K8S_MODULES_VER="$(K8S_MODULES_VER)" \
 	K8S_MODULES_MAJOR_VER="$(K8S_MODULES_MAJOR_VER)" \
 	K8S_MODULES_MINOR_VER="$(K8S_MODULES_MINOR_VER)" \
@@ -140,7 +141,7 @@ goreleaser-build:
 	SYFT_VERSION="$(SYFT_VERSION)" \
 	ARCHIVES_VERSION="$(ARCHIVES_VERSION)" \
 	HELM_VERSION="$(HELM_VERSION)" \
-	goreleaser build --clean --skip=validate
+	goreleaser build --clean --skip=validate --snapshot
 
 # INTERNAL: used to publish the init package
 publish-init-package:
