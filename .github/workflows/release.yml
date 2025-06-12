@@ -175,6 +175,9 @@ jobs:
       #     private-key: ${{ secrets.HOMEBREW_TAP_WORKFLOW_GITHUB_APP_SECRET }}
       #     owner: defenseunicorns
       #     repositories: homebrew-tap
+    
+      - name: Cleanup files
+        uses: ./.github/actions/cleanup-files
 
       # Create the GitHub release notes, upload artifact backups to S3, publish homebrew recipe
       - name: Run GoReleaser
