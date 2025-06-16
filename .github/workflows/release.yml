@@ -31,8 +31,8 @@ jobs:
 
       - name: Build CLI
         run: |
-          make build-cli-linux-amd
-          make build-cli-linux-arm
+          CLI_VERSION=$GITHUB_REF_NAME make build-cli-linux-amd
+          CLI_VERSION=$GITHUB_REF_NAME make build-cli-linux-arm
 
       - name: "Zarf Agent: Login to GHCR"
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
@@ -175,7 +175,7 @@ jobs:
       #     private-key: ${{ secrets.HOMEBREW_TAP_WORKFLOW_GITHUB_APP_SECRET }}
       #     owner: defenseunicorns
       #     repositories: homebrew-tap
-    
+
       - name: Cleanup files
         uses: ./.github/actions/cleanup-files
 
