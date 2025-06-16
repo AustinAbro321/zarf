@@ -152,6 +152,7 @@ jobs:
             echo "BREW_NAME=zarf" >> $GITHUB_ENV
           fi
 
+
       - name: Setup release ENV vars
         run: |
           echo TAG=$GITHUB_REF_NAME >> $GITHUB_ENV
