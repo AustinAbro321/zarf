@@ -8,6 +8,7 @@ before:
 universal_binaries:
   - replace: false
 
+
 # Build the different combination of goos/arch binaries
 builds:
   - env:
