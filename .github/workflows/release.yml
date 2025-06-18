@@ -110,7 +110,7 @@ jobs:
       # Build the example packages and run the tests
       - name: Build examples and run tests
         run: |
-          sudo env "PATH=$PATH" CI=true APPLIANCE_MODE=true make test-e2e ARCH=amd64
+          sudo env "PATH=$PATH" CI=true APPLIANCE_MODE=true CLI_VERSION=$GITHUB_REF_NAME make test-e2e ARCH=amd64
 
       - name: Save logs
         if: always()
@@ -151,7 +151,6 @@ jobs:
           else
             echo "BREW_NAME=zarf" >> $GITHUB_ENV
           fi
-
 
       - name: Setup release ENV vars
         run: |
